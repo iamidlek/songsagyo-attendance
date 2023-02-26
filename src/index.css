@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Sunflower', 'Noto Sans KR', sans-serif;
+}
+
+input {
+  appearance: none;
+  border-radius: 0;
+}
+
+input:focus {
+  outline: none;
+}
