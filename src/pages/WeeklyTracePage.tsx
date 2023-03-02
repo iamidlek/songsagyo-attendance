@@ -1,46 +1,86 @@
-import attendStamp from '../assets/attend-stamp.png';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { PersonalData } from '../App';
+import { AttendCircle } from '../components/AttendCircle';
 
-export const WeeklyTracePage = () => {
+interface WeeklyTracePageProps {
+  checking: boolean;
+  data: PersonalData;
+}
+
+const march = ['3.12', '3.19', '3.26', '4.5'];
+const april = ['4.12', '4.19', '4.26', '5.2'];
+
+export const WeeklyTracePage: React.FC<WeeklyTracePageProps> = ({
+  checking,
+  data,
+}) => {
+  const [attendInfo, setAttendInfo] = useState<{ [key: string]: string }>();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!checking) {
+      navigate('/');
+    }
+    const attend: { [key: string]: string } = {};
+    data?.timelist?.map((time) => {
+      const [date, hourmin]: string[] = time.split(' ');
+      attend[date] = hourmin;
+    });
+    setAttendInfo(attend);
+  }, []);
+
+  const fortest = attendInfo?.['3.5'];
   return (
-    <div className="">
-      <div className="bg-gradient-to-r from-amber-400 to-amber-500  rounded-lg py-3 px-2 font-bold">
-        <div className="border-dotted border-[0.8rem] border-white">
-          <div className="mx-auto flex flex-wrap max-w-[17.8rem] sm:max-w-[57rem] py-3 gap-y-3 justify-around items-center">
-            <div className="relative w-24 h-24 rounded-full border-4 border-amber-300 bg-orange-100/90 flex justify-center items-center">
-              <div className="opacity-60">3.5</div>
-              <img className="absolute" src={attendStamp} />
+    <div className="relative fortest">
+      <div className="flex gap-2 justify-around">
+        <div className="w-1/2 bg-gradient-to-r from-amber-400 to-amber-500  rounded-lg py-3 px-2 font-bold">
+          <div className="border-dotted border-[0.8rem] border-white">
+            <div className="mx-auto flex flex-wrap max-w-[17.8rem] sm:max-w-[80rem] pt-3 pb-8 gap-y-8 justify-around items-center">
+              {march.map((date) => {
+                if (!attendInfo) return;
+                const time = attendInfo[date];
+                return (
+                  <AttendCircle
+                    key={date}
+                    color="border-amber-300 bg-orange-100/90"
+                    date={date}
+                    time={time}
+                    attend={Boolean(time)}
+                  />
+                );
+              })}
             </div>
-            <div className="w-24 h-24 rounded-full border-4 border-amber-300 bg-orange-100/90 flex justify-center items-center">
-              3.12
-            </div>
-            <div className="w-24 h-24 rounded-full border-4 border-amber-300 bg-orange-100/90 flex justify-center items-center">
-              3.19
-            </div>
-            <div className="relative w-24 h-24 rounded-full border-4 border-amber-300 bg-orange-100/90 flex justify-center items-center">
-              <div className="opacity-60">3.26</div>
-              <img className="absolute " src={attendStamp} />
+          </div>
+        </div>
+        <div className="w-1/2 bg-gradient-to-r from-red-200 to-pink-300 rounded-lg py-3 px-2 font-bold">
+          <div className="border-dotted border-[0.8rem] border-white">
+            <div className="mx-auto flex flex-wrap max-w-[17.8rem] sm:max-w-[57rem] pt-3 pb-8 gap-y-8 justify-around items-center">
+              {april.map((date) => {
+                if (!attendInfo) return;
+                const time = attendInfo[date];
+                return (
+                  <AttendCircle
+                    key={date}
+                    color="border-red-300 bg-red-100/90"
+                    date={date}
+                    time={time}
+                    attend={Boolean(time)}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>
       </div>
-      <div className="h-5 bg-orange-100/90"></div>
-      <div className="bg-gradient-to-r from-red-200 to-pink-300 rounded-lg py-3 px-2 font-bold">
-        <div className="border-dotted border-[0.8rem] border-white">
-          <div className="mx-auto flex flex-wrap max-w-[17.8rem] sm:max-w-[57rem] py-3 gap-y-3 justify-around items-center">
-            <div className="w-24 h-24 rounded-full border-4 border-red-300 bg-red-100/90 flex justify-center items-center">
-              4.2
-            </div>
-            <div className="w-24 h-24 rounded-full border-4 border-red-300 bg-red-100/90 flex justify-center items-center">
-              4.9
-            </div>
-            <div className="w-24 h-24 rounded-full border-4 border-red-300 bg-red-100/90 flex justify-center items-center">
-              4.16
-            </div>
-            <div className="w-24 h-24 rounded-full border-4 border-red-300 bg-red-100/90 flex justify-center items-center">
-              4.23
-            </div>
-          </div>
-        </div>
+      <div className="fortest flex flex-col items-center w-32 h-40 bg-slate-50 absolute top-44 right-16">
+        <div>테스트 입니다.</div>
+        <AttendCircle
+          color="border-amber-300 bg-orange-100/90"
+          date={'3.5'}
+          time={fortest}
+          attend={Boolean(fortest)}
+        />
       </div>
     </div>
   );

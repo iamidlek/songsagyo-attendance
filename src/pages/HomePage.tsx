@@ -1,9 +1,14 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-const password = '송사교';
+// 정답이 될 단어 설정
+const password = '테스트';
 
-export const HomePage = () => {
+interface HomePageProps {
+  setResult: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const HomePage: React.FC<HomePageProps> = ({ setResult }) => {
   const [answer, setAnswer] = useState('');
 
   const navigate = useNavigate();
@@ -12,14 +17,14 @@ export const HomePage = () => {
     setAnswer(event.target.value);
   };
 
-  const handleClickSubmitButton = () => {
+  const handleClickSubmitButton = async () => {
     if (isEqual) {
-      // 전역상태에 isEqual값을 저장하여 그냥 라우터 넘어가는 것을 방지
-      // store 값 초기화도 필수
+      setResult(isEqual);
       navigate('/timelimit');
       return;
     }
     setAnswer('');
+    setResult(false);
   };
 
   const isEqual = useMemo(() => {
