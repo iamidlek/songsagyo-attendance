@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 
 // 정답이 될 단어 설정
-const password = '테스트';
+const password = '대학청년부';
 
 interface HomePageProps {
   setResult: React.Dispatch<React.SetStateAction<boolean>>;

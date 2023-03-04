@@ -8,12 +8,12 @@ export const CommonLayout = () => {
       <div
         className="h-full bg-cover bg-center flex justify-center items-center"
         style={{ backgroundImage: `url(${bgImg})` }}>
-        <main className="w-4/5 mt-7 bg-white/75 text-center rounded-2xl">
-          <Outlet />
-        </main>
         <div className="absolute top-0 py-4 right-0 px-4 w-52 rounded-3xl">
           <img src={mainLogo} alt="songsagyo logo" />
         </div>
+        <main className="m-h-[530px] w-4/5 mt-7 bg-white/75 text-center rounded-2xl">
+          <Outlet />
+        </main>
       </div>
     </div>
   );
