@@ -12,7 +12,7 @@ export interface PersonalData {
 }
 
 function App() {
-  const [cerberus, setCerberus] = useState(true);
+  const [cerberus, setCerberus] = useState(false);
   const [personalData, setPersonalData] = useState<PersonalData>({
     listcount: 0,
     sarang_name: '',
