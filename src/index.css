@@ -14,3 +14,12 @@ input {
 input:focus {
   outline: none;
 }
+
+.path {
+  border-style: dotted;
+  border-color: rgb(255, 255, 255);
+  border-width: 0.8rem;
+  border-image-source: ('https://cl.ly/3c2J3c0l3r0P/dots.svg');
+  border-image-slice: 33% 33%;
+  border-image-repeat: round;
+}
