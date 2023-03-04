@@ -60,47 +60,65 @@ export const TimeLimitPage: React.FC<TimeLimitPageProps> = ({
     setUserName(event.target.value);
   };
 
-  let once = false;
-  const handleClickSubmitButton = async () => {
-    if (once) return;
-    once = true;
-
+  const getCurrentKoreanTime = () => {
     const now = new Date();
     const utc = now.getTime() + now.getTimezoneOffset() * 60 * 1000;
     const KRT = 9 * 60 * 60 * 1000;
     const koreaTime = new Date(utc + KRT);
     const month = koreaTime.getMonth() + 1;
     const date = koreaTime.getDate();
+    const day = koreaTime.getDay();
     const hour = koreaTime.getHours();
     const min = koreaTime.getMinutes();
-    const { data } = await axios.post(
-      'https://port-0-songsagyo-attendance-server-3kzv72nlemksp4v.sel3.cloudtype.app/attend',
-      {
-        sarang_name: `${sarangName}${userName}`,
-        time: `${month}.${date} ${hour}:${min}`,
-      },
-    );
-    setData(data[0]);
-    navigate('/weeklytrace');
+    return { month, date, day, hour, min };
+  };
+
+  let once = false;
+  const handleClickSubmitButton = async () => {
+    if (once) return;
+    once = true;
+
+    const { month, date, day, hour, min } = getCurrentKoreanTime();
+    if (checkDateAndTime({ day, hour, min })) {
+      setSarangName('');
+      setUserName('');
+      setTimeover(true);
+    } else {
+      const { data } = await axios.post(
+        'https://port-0-songsagyo-attendance-server-3kzv72nlemksp4v.sel3.cloudtype.app/attend',
+        {
+          sarang_name: `${sarangName}${userName}`,
+          time: `${month}.${date} ${hour}:${min}`,
+        },
+      );
+      setData(data[0]);
+      navigate('/weeklytrace');
+    }
+  };
+
+  const checkDateAndTime = ({
+    day,
+    hour,
+    min,
+  }: {
+    day: number;
+    hour: number;
+    min: number;
+  }) => {
+    // 주일이 아닌 날엔 비활성화
+    // 주일 14시 1분 이후엔 비활성화
+    if (day || (hour > 13 && min > 1)) {
+      return true;
+    }
+    return false;
   };
 
   useEffect(() => {
     if (!checking) {
       navigate('/');
     }
-    const today = new Date();
-    const sunday = today.getDay();
-    // 주일이 아닌 날엔 비활성화
-    if (sunday) {
-      setTimeover(true);
-      return;
-    }
-    const hour = today.getHours();
-    const min = today.getMinutes();
-    // 주일 14시 1분 이후엔 비활성화
-    if (hour > 13 && min > 1) {
-      setTimeover(true);
-    }
+    const { day, hour, min } = getCurrentKoreanTime();
+    setTimeover(checkDateAndTime({ day, hour, min }));
   }, []);
 
   return (
