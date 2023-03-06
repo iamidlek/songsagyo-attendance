@@ -22,12 +22,7 @@ export const WeeklyTracePage: React.FC<WeeklyTracePageProps> = ({
     if (!checking) {
       navigate('/');
     }
-    const attend: { [key: string]: string } = {};
-    data?.timelist?.map((time) => {
-      const [date, hourmin]: string[] = time.split(' ');
-      attend[date] = hourmin;
-    });
-    setAttendInfo(attend);
+    setAttendInfo(data.time_json);
   }, []);
 
   const fortest = attendInfo?.['3.5'];

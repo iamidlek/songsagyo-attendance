@@ -84,14 +84,16 @@ export const TimeLimitPage: React.FC<TimeLimitPageProps> = ({
       setUserName('');
       setTimeover(true);
     } else {
+      const minute = `${min}`.length === 1 ? `0${min}` : min;
       const { data } = await axios.post(
         'https://port-0-songsagyo-attendance-server-3kzv72nlemksp4v.sel3.cloudtype.app/attend',
         {
           sarang_name: `${sarangName}${userName}`,
-          time: `${month}.${date} ${hour}:${min}`,
+          date: `${month}.${date}`,
+          time: `${hour}:${minute}`,
         },
       );
-      setData(data[0]);
+      setData(data);
       navigate('/weeklytrace');
     }
   };
@@ -107,7 +109,7 @@ export const TimeLimitPage: React.FC<TimeLimitPageProps> = ({
   }) => {
     // 주일이 아닌 날엔 비활성화
     // 주일 14시 1분 이후엔 비활성화
-    if (day || (hour > 13 && min > 1)) {
+    if (day || hour > 14 || (hour > 13 && min > 1)) {
       return true;
     }
     return false;

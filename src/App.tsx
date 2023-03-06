@@ -6,17 +6,17 @@ import { TimeLimitPage } from './pages/TimeLimitPage';
 import { WeeklyTracePage } from './pages/WeeklyTracePage';
 
 export interface PersonalData {
-  listcount: number;
   sarang_name: string;
-  timelist: string[];
+  time_json: {
+    [key: string]: string;
+  };
 }
 
 function App() {
   const [cerberus, setCerberus] = useState(false);
   const [personalData, setPersonalData] = useState<PersonalData>({
-    listcount: 0,
     sarang_name: '',
-    timelist: [],
+    time_json: {},
   });
   return (
     <BrowserRouter>
