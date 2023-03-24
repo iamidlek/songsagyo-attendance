@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-const password = '대학청년부';
+const password = '사랑하고 축복합니다';
 
 interface HomePageProps {
   setResult: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,6 +14,12 @@ export const HomePage: React.FC<HomePageProps> = ({ setResult }) => {
 
   const handleInputAnswer = (event: React.ChangeEvent<HTMLInputElement>) => {
     setAnswer(event.target.value);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if ('Enter' === event.key) {
+      handleClickSubmitButton();
+    }
   };
 
   const handleClickSubmitButton = async () => {
@@ -38,6 +44,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setResult }) => {
         type="text"
         placeholder="단어를 입력해 주세요"
         onInput={handleInputAnswer}
+        onKeyDown={handleKeyDown}
         value={answer}
       />
       <button

@@ -8,8 +8,8 @@ interface WeeklyTracePageProps {
   data: PersonalData;
 }
 
-const march = ['3.12', '3.19', '3.26', '4.5'];
-const april = ['4.12', '4.19', '4.26', '5.2'];
+const march = ['4.1', '4.2', '4.9', '4.16', '4.23'];
+const april = ['4.30', '5.7', '5.14', '5.21'];
 
 export const WeeklyTracePage: React.FC<WeeklyTracePageProps> = ({
   checking,

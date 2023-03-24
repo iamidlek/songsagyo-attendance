@@ -80,9 +80,9 @@ export const TimeLimitPage: React.FC<TimeLimitPageProps> = ({
 
     const { month, date, day, hour, min } = getCurrentKoreanTime();
     if (checkDateAndTime({ day, hour, min })) {
+      setTimeover(true);
       setSarangName('');
       setUserName('');
-      setTimeover(true);
     } else {
       const minute = `${min}`.length === 1 ? `0${min}` : min;
       const { data } = await axios.post(
@@ -109,9 +109,9 @@ export const TimeLimitPage: React.FC<TimeLimitPageProps> = ({
   }) => {
     // 주일이 아닌 날엔 비활성화
     // 주일 14시 1분 이후엔 비활성화
-    if (day || hour > 14 || (hour > 13 && min > 1)) {
-      return true;
-    }
+    // if (day || hour > 14 || (hour > 13 && min > 1)) {
+    //   return true;
+    // }
     return false;
   };
 
