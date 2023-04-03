@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-const password = '십자가';
+const password = '부활의 기쁨';
 
 interface HomePageProps {
   setResult: React.Dispatch<React.SetStateAction<boolean>>;
@@ -56,7 +56,7 @@ export const HomePage: React.FC<HomePageProps> = ({ setResult }) => {
             : 'bg-slate-200/50') +
           ' mt-8 w-3/5 h-11 rounded-lg transition-colors duration-300'
         }>
-        {isEqual ? '확인!' : answer ? '불일치' : '입력 확인중..'}
+        {isEqual ? '확인!' : answer ? '단어 확인중..' : '입력 대기중..'}
       </button>
     </div>
   );
