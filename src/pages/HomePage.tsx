@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router';
 
-const password = '부활의 기쁨';
+const password = '대만';
 
 interface HomePageProps {
   setResult: React.Dispatch<React.SetStateAction<boolean>>;
